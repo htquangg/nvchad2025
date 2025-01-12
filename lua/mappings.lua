@@ -119,8 +119,12 @@ map("n", "<leader>hp", function()
   require("gitsigns").preview_hunk()
 end, { desc = "preview hunk" })
 
+map("n", "<leader>hd", function()
+  require("gitsigns").diffthis()
+end, { desc = "diff this page" })
+
 map("n", "<leader>gb", function()
-  require("gitsigns").blame_line { full = true }
+  require("gitsigns").blame_line()
 end, { desc = "blame line" })
 
 map("n", "<leader>gB", "<cmd>Gitsigns blame<CR>", { desc = "blame all" })
@@ -143,6 +147,7 @@ map("n", "<leader>le", "<cmd>Telescope diagnostics<CR>", { desc = "diagnostic in
 
 -- fzf lua
 require("fzf-lua").setup {
+  "telescope", -- "telescope", "fzf-native", "fzf-vim", "default"
   winopts = {
     height = 0.85, -- window height
     width = 0.80, -- window width
@@ -151,9 +156,42 @@ require("fzf-lua").setup {
     border = "rounded", -- 'none', 'single', 'double', 'thicc' or 'rounded'
     fullscreen = false, -- start fullscreen?
   },
+  grep = {
+    actions = {
+      ["ctrl-h"] = require("fzf-lua.actions").toggle_hidden,
+      ["ctrl-i"] = require("fzf-lua.actions").toggle_ignore,
+    },
+    rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e",
+    grep_opts = "--binary-files=without-match --line-number --recursive --color=auto --perl-regexp -e",
+    rg_glob = true,
+  },
+  files = {
+    actions = {
+      ["ctrl-g"] = require("fzf-lua.actions").toggle_ignore,
+    },
+  },
+  lsp = {
+    code_actions = {
+      previewer = "codeaction_native",
+      preview_pager = "delta --side-by-side --width=$FZF_PREVIEW_COLUMNS --hunk-header-style='omit' --file-style='omit'",
+      prompt = "Code Actions󰅂 ",
+      -- ui_select = false, -- use 'vim.ui.select'?
+      async_or_timeout = 5000,
+      winopts = {
+        -- row = 0.40,
+        -- height = 0.60,
+        -- width = 0.60,
+        preview = {
+          border = "border-thinblock",
+          layout = "vertical",
+          vertical = "up:75%",
+        },
+      },
+    },
+  },
 }
 
-map("n", "<leader>fw", "<cmd>FzfLua live_grep<CR>", { desc = "fzflua live grep" })
+map("n", "<leader>fw", "<cmd>FzfLua live_grep_native<CR>", { desc = "fzflua live grep native" })
 -- map(
 --   "n",
 --   "<leader>fW",
