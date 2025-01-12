@@ -3,6 +3,7 @@
 -- add yours here
 
 local map = vim.keymap.set
+local opts = { noremap = true, silent = true }
 
 map("i", "<C-b>", "<ESC>^i", { desc = "move beginning of line" })
 map("i", "<C-e>", "<End>", { desc = "move end of line" })
@@ -222,3 +223,22 @@ autocmd("BufReadPost", {
     end
   end,
 })
+
+---------------------
+-- Copy absolute & relative file path
+---------------------
+
+map("n", "<leader>cr", function()
+  vim.cmd "let @+=expand('%')"
+end, { noremap = true, silent = true, desc = "Copy relative file path" })
+
+map("n", "<leader>cc", function()
+  vim.cmd "let @+=expand('%:p')"
+end, { noremap = true, silent = true, desc = "Copy complete/absolute file path" })
+
+-- Visual Block --
+-- Move text up and down
+map("x", "J", ":move '>+1<CR>gv-gv", opts)
+map("x", "K", ":move '<-2<CR>gv-gv", opts)
+map("x", "<c-j>", ":move '>+1<CR>gv-gv", opts)
+map("x", "<c-k>", ":move '<-2<CR>gv-gv", opts)
