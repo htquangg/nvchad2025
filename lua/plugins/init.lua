@@ -302,4 +302,55 @@ return {
       -- see below for full list of options 👇
     },
   },
+  {
+    "ThePrimeagen/git-worktree.nvim",
+    opts = {},
+    config = function()
+      require("telescope").load_extension "git_worktree"
+    end,
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+    },
+    keys = {
+      {
+        "<leader>gwl",
+        function()
+          require("telescope").extensions.git_worktree.git_worktrees { path_display = {} }
+        end,
+        desc = "Manage",
+      },
+      {
+        "<leader>gwc",
+        function()
+          require("telescope").extensions.git_worktree.create_git_worktree()
+        end,
+        desc = "Create",
+      },
+    },
+  },
+  {
+    "Wansmer/treesj",
+    lazy = false,
+    dependencies = { "nvim-treesitter/nvim-treesitter" }, -- if you install parsers with `nvim-treesitter`
+    config = function()
+      require("treesj").setup {--[[ your config ]]
+        use_default_keymaps = false,
+        ---@type boolean Node with syntax error will not be formatted
+        check_syntax_error = false,
+        ---If line after join will be longer than max value,
+        ---@type number If line after join will be longer than max value, node will not be formatted
+        max_join_length = 120,
+        ---Cursor behavior:
+        ---hold - cursor follows the node/place on which it was called
+        ---start - cursor jumps to the first symbol of the node being formatted
+        ---end - cursor jumps to the last symbol of the node being formatted
+        ---@type 'hold'|'start'|'end'
+        cursor_behavior = "hold",
+        ---@type boolean Notify about possible problems or not
+        notify = true,
+        ---@type boolean Use `dot` for repeat action
+        dot_repeat = true,
+      }
+    end,
+  },
 }
