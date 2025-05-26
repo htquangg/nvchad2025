@@ -45,31 +45,29 @@ map("n", "<leader>x", function()
 end, { desc = "buffer close" })
 
 -- Comment
-map("n", "<leader>/", "gcc", { desc = "toggle comment", remap = true })
-map("v", "<leader>/", "gc", { desc = "toggle comment", remap = true })
+-- map("n", "<leader>/", "gcc", { desc = "toggle comment", remap = true })
+-- map("v", "<leader>/", "gc", { desc = "toggle comment", remap = true })
 
 -- nvimtree
 map("n", "<C-b>", "<cmd>NvimTreeToggle<cr>", { desc = "Toggle NvimTree" })
 map("n", "<leader>e", "<cmd>NvimTreeFocus<CR>", { desc = "nvimtree focus window" })
 
--- telescope
-map(
-  "n",
-  "<leader>fW",
-  "<cmd>Telescope live_grep follow=true no_ignore=true hidden=true<CR>",
-  { desc = "telescope live grep all files" }
-)
-map("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "telescope find buffers" })
-map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "telescope help page" })
-map("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
-map("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "telescope find oldfiles" })
+map("n", "\\", "<cmd>FzfLua buffers<CR>", { desc = "telescope find buffers" })
+map("n", "<leader>ma", "<cmd>FzfLua marks<CR>", { desc = "telescope find marks" })
+map("n", "<leader>fo", "<cmd>FzfLua oldfiles<CR>", { desc = "telescope find oldfiles" })
 map("n", "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "telescope find in current buffer" })
-map("n", "<leader>cm", "<cmd>Telescope git_commits<CR>", { desc = "telescope git commits" })
-map("n", "<leader>gt", "<cmd>Telescope git_status<CR>", { desc = "telescope git status" })
-map("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" })
-
-map("n", "<leader>ol", "<cmd>ObsidianQuickSwitch<CR>", { desc = "obsidian quick switch" })
-map("n", "<leader>on", "<cmd>ObsidianNew<CR>", { desc = "obsidian quick switch" })
+map("n", "<leader>cm", "<cmd>FzfLua git_commits<CR>", { desc = "telescope git commits" })
+map("n", "<leader>gt", "<cmd>FzfLua git_status<CR>", { desc = "telescope git status" })
+map("n", "<leader>fw", "<cmd>FzfLua live_grep_native<CR>", { desc = "fzflua live grep native" })
+-- telescope
+-- map(
+--   "n",
+--   "<leader>fW",
+--   "<cmd>Telescope live_grep follow=true no_ignore=true hidden=true<CR>",
+--   { desc = "telescope live grep all files" }
+-- )
+map("n", "<leader>ff", "<cmd>FzfLua files<cr>", { desc = "fzflua find files" })
+map("n", "<leader>fc", "<cmd>FzfLua grep_cword<cr>", { desc = "fzflua grep cword" })
 
 map("n", "<leader>th", function()
   require("nvchad.themes").open()
@@ -147,7 +145,7 @@ end, { desc = "go to prev diagnostic" })
 map("n", "]e", function()
   vim.diagnostic.goto_next { float = { border = "rounded" } }
 end, { desc = "go to next diagnostic" })
-map("n", "<leader>le", "<cmd>Telescope diagnostics<CR>", { desc = "diagnostic in workspace" })
+map("n", "<leader>le", "<cmd>FzfLua diagnostics_workspace<CR>", { desc = "diagnostic in workspace" })
 
 -- fzf lua
 require("fzf-lua").setup {
@@ -195,16 +193,6 @@ require("fzf-lua").setup {
   },
 }
 
-map("n", "<leader>fw", "<cmd>FzfLua live_grep_native<CR>", { desc = "fzflua live grep native" })
--- map(
---   "n",
---   "<leader>fW",
---   "<cmd>FzfLua live_grep follow=true no_ignore=true hidden=true<CR>",
---   { desc = "fzflua live grep all files" }
--- )
-map("n", "<leader>ff", "<cmd>FzfLua files<cr>", { desc = "fzflua find files" })
-map("n", "<leader>fc", "<cmd>FzfLua grep_cword<cr>", { desc = "fzflua grep cword" })
-
 -- other stuff
 map("v", ">", ">gv", { desc = "indent" })
 map("v", "<", "<gv", { desc = "indent" })
@@ -238,6 +226,10 @@ end, { noremap = true, silent = true, desc = "Copy relative file path" })
 map("n", "<leader>cc", function()
   vim.cmd "let @+=expand('%:p')"
 end, { noremap = true, silent = true, desc = "Copy complete/absolute file path" })
+
+map("n", "<leader>cf", function()
+  vim.cmd "let @+=expand('%:t')"
+end, { noremap = true, silent = true, desc = "Copy filename" })
 
 -- Visual Block --
 -- Move text up and down

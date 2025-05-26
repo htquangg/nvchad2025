@@ -164,6 +164,10 @@ return {
     },
   },
   {
+    "tpope/vim-rhubarb",
+    lazy = false,
+  },
+  {
     "ibhagwan/fzf-lua",
     -- optional for icon support
     dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -269,40 +273,6 @@ return {
     config = true,
   },
   {
-    "epwalsh/obsidian.nvim",
-    version = "*", -- recommended, use latest release instead of latest commit
-    lazy = false,
-    ft = "markdown",
-    -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
-    -- event = {
-    --   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
-    --   -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/*.md"
-    --   -- refer to `:h file-pattern` for more examples
-    --   "BufReadPre path/to/my-vault/*.md",
-    --   "BufNewFile path/to/my-vault/*.md",
-    -- },
-    dependencies = {
-      -- Required.
-      "nvim-lua/plenary.nvim",
-
-      -- see below for full list of optional dependencies 👇
-    },
-    opts = {
-      workspaces = {
-        {
-          name = "personal",
-          path = "~/Documents/Obsidian Vault",
-        },
-        -- {
-        --   name = "work",
-        --   path = "~/vaults/work",
-        -- },
-      },
-
-      -- see below for full list of options 👇
-    },
-  },
-  {
     "ThePrimeagen/git-worktree.nvim",
     opts = {},
     config = function()
@@ -350,6 +320,22 @@ return {
         notify = true,
         ---@type boolean Use `dot` for repeat action
         dot_repeat = true,
+      }
+    end,
+  },
+  {
+    "folke/ts-comments.nvim",
+    opts = {},
+    event = "VeryLazy",
+    enabled = vim.fn.has "nvim-0.10.0" == 1,
+  },
+  {
+    "kylechui/nvim-surround",
+    version = "^3.0.0", -- Use for stability; omit to use `main` branch for the latest features
+    event = "VeryLazy",
+    config = function()
+      require("nvim-surround").setup {
+        -- Configuration here, or leave empty to use defaults
       }
     end,
   },
